@@ -1,0 +1,38 @@
+{% extends 'base.j2' %}
+
+{% block content %}
+    <form action="/add?module_id={{ module }}" method="post">
+        <div class="form-group">
+            {% if 'short_description' in errors %}
+                {% set error_class = 'is-invalid' %}
+            {% endif %}
+            <label for="short_description">Kurzbeschreibung</label>
+            <input type="text" class="form-control {{ error_class }}" name="short_description" id="short_description" value="{{ short_description }}">
+            {% if 'short_description' in errors %}
+                <div class="invalid-feedback">
+                    {{ errors.short_description }}
+                </div>
+            {% endif %}
+        </div>
+        {% for element in config %}
+            {% if element.type == 'integer' %}
+                {% set type = 'number' %}
+            {% else %}
+                {% set type = 'text' %}
+            {% endif %}
+            {% if element.name in errors %}
+                {% set error_class = 'is-invalid' %}
+            {% endif %}
+            <div class="form-group">
+                <label for="{{ element.name }}">{{ element.title }}</label>
+                <input type="{{ type }}" class="form-control {{ error_class }}" name="{{ element.name }}" id="{{ element.name }}" value="{{ values[element.name] }}">
+                {% if element.name in errors %}
+                    <div class="invalid-feedback">
+                        {{ errors[element.name] }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Speichern</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,3 @@
+[submodule "src/mqttbb/static/bootstrap"]
+	path = src/mqttbb/static/bootstrap
+	url = https://github.com/twbs/bootstrap.git

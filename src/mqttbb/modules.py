@@ -18,7 +18,11 @@ class Module:
 
     @property
     def paths(self):
-        return self.paths()
+        return self.__paths
+
+    @property
+    def config_values(self):
+        return self.__config
 
     def publish_message(self, path, message, retain=False):
         """
@@ -102,12 +106,13 @@ class Module:
         :return:
         """
         meta = []
-        for path in self.__paths:
+
+        for path in self.__paths.values():
             meta.append({
-                'path': path.path,
-                'name': path.name,
-                'description': path.description,
-                'readonly': path.readonly,
+                'path': path['path'],
+                'name': path['name'],
+                'description': path['description'],
+                'readonly': path['readonly'],
             })
         self.__on_publish('meta', json.dumps('meta'), True)
 
@@ -121,6 +126,13 @@ class Module:
         """
         if path in self.__paths:
             self.__paths[path]['callback'](path, message)
+
+    def shutdown(self):
+        """
+        subclasses should implement this method for graceful shutdown of running threads and open connections.
+        :return:
+        """
+        pass
 
 
 if __name__ == '__main__':

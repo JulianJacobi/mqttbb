@@ -1,0 +1,47 @@
+{% extends 'base.j2' %}
+
+{% block content %}
+    <form action="/add" method="get" class="">
+        <div class="form-row">
+            <div class="col">
+                <select class="custom-select" name="module_id">
+                    {% for module in available_modules %}
+                        <option value="{{ module.id }}">{{ module.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success">Hinzufügen</button>
+            </div>
+        </div>
+    </form>
+    <table class="table">
+    <thead>
+    <tr>
+        <th style="text-align: left;">Kurzbeschreibung</th>
+        <th>ID</th>
+        <th style="text-align: right;">Aktion</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if instances|length > 0 %}
+        {% for instance in instances %}
+            <tr>
+            <td>
+                <a href="/info/{{ instance.uid }}"><b>{{ instance.short_description }}</b></a><br>
+                <small>{{ instance.module_name }} ({{ instance.module }})</small>
+            </td>
+            <td style="vertical-align: middle; text-align: center;">
+                <small>{{ instance.uid }}</small>
+            </td>
+            <td style="text-align: right">
+                <a href="/delete/{{ instance.uid }}" class="btn btn-outline-danger">Entfernen</a>
+            </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td colspan="100" style="text-align: center;">Keine Instanzen konfiguriert</td></tr>
+    {% endif %}
+    </tbody>
+    </table>
+{% endblock %}

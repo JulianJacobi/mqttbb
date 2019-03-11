@@ -1,0 +1,14 @@
+{% extends 'base.j2' %}
+
+{% block content %}
+    Soll die folgende Instanz entfernt werden:<br>
+    <br>
+    <h2 style="margin-bottom: 0"><b>{{ short_description }}</b> <small>{{ module_name }} ({{ module }})</small></h2>
+    <small>{{ uid }}</small>
+    <br>
+    <br>
+    <form action="" method="post">
+        <a href="/" class="btn btn-secondary">Abbrechen</a>
+        <button class="btn btn-danger float-right">Entfernen</button>
+    </form>
+{% endblock %}

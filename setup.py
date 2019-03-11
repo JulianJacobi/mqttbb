@@ -14,6 +14,12 @@ setup(
     package_dir={'mqttbb': 'src/mqttbb/'},
     install_requires=[
         'paho-mqtt',
-        'bottle'
+        'bottle',
+        'jinja2'
+    ],
+    package_data=[
+        'src/mqttbb/static/bootstrap/dist/css/bootstrap.min.css'
+        'src/mqttbb/static/bootstrap/dist/css/bootstrap.min.css.map'
+        'src/mqttbb/static/template/*'
     ],
 )

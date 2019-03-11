@@ -41,6 +41,7 @@ def main():
         if module != '':
             bb.add_module(module)
 
+    bb.http_loop()
 
 if __name__ == '__main__':
     main()
