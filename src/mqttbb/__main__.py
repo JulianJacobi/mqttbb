@@ -27,21 +27,25 @@ def main():
             exit(1)
     config.read(config_files)
 
-    bb = BroadcastBridge(
-        broker_host=config.get('MQTT', 'host', fallback='localhost'),
-        broker_port=config.getint('MQTT', 'port', fallback=1883),
-        http_host=config.get('HTTP', 'host', fallback='localhost'),
-        http_port=config.getint('HTTP', 'port', fallback=8080),
-        mqtt_prefix=config.get('MQTT', 'prefix', fallback='broadcast_bridge/'),
-        persistence_file=args.persistence_file._mode,
-    )
+    try:
+        bb = BroadcastBridge(
+            broker_host=config.get('MQTT', 'host', fallback='localhost'),
+            broker_port=config.getint('MQTT', 'port', fallback=1883),
+            http_host=config.get('HTTP', 'host', fallback='localhost'),
+            http_port=config.getint('HTTP', 'port', fallback=8080),
+            mqtt_prefix=config.get('MQTT', 'prefix', fallback='broadcast_bridge/'),
+            persistence_file=args.persistence_file._mode,
+        )
 
-    for module in str(config.get('General', 'modules', fallback='')).split(','):
-        module = module.strip()
-        if module != '':
-            bb.add_module(module)
+        for module in str(config.get('General', 'modules', fallback='')).split(','):
+            module = module.strip()
+            if module != '':
+                bb.add_module(module)
 
-    bb.http_loop()
+        bb.http_loop()
+    except ConnectionRefusedError:
+        print('MQTT connection failed.')
+
 
 if __name__ == '__main__':
     main()
