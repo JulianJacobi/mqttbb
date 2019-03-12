@@ -1,4 +1,4 @@
-from mqttbb.exceptions import ConfigError, PathNotRegistered, PathAlreadyRegistered
+from mqttbb.exceptions import ConfigError, PathNotRegistered, PathAlreadyRegistered, ConfigCheckError
 import json
 
 
@@ -57,7 +57,9 @@ class Module:
             try:
                 self.__config_checked[name] = getattr(self, '_check_{}'.format(type))(config[name])
             except AttributeError:
-                self.__config_checked[name] = config[name]
+                pass
+            except ConfigCheckError as e:
+                raise ConfigError(message=e.message, config_name=name)
 
     def _check_string(self, value):
         """

@@ -7,6 +7,12 @@ class ConfigError(Exception):
         self.config_name = config_name
 
 
+class ConfigCheckError(Exception):
+
+    def __init__(self, message):
+        self.message = message
+
+
 class PathNotRegistered(Exception):
     pass
 
