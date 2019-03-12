@@ -269,7 +269,7 @@ class BroadcastBridge:
         def add():
             errors = {}
             module = bottle.request.GET.get('module_id')
-            if module is None:
+            if module is None or module not in self.available_modules:
                 return bottle.redirect('/')
 
             config = self.available_modules[module].config
