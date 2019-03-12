@@ -71,7 +71,7 @@ class BroadcastBridge:
                 'uuid': i,
                 'short_description': instance['short_description'],
             })
-        json.dump(instances, open(self.__persistence_file, 'w'))
+        json.dump(instances, open(self.__persistence_file, 'w+'))
 
     def __on_mqtt_message(self, client, user_data, message: MQTTMessage):
         """
