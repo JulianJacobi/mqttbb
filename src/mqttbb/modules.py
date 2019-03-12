@@ -10,8 +10,8 @@ class Module:
 
     def __init__(self, config, on_path_register=lambda p: True, on_publish=lambda p, m, r: True, *args, **kwargs):
         self.__paths = {}
-        self.__config = config
-        self.__config_checked = {}
+        self._config = config
+        self._config_checked = {}
         self.__config_check(config)
         self.on_path_register = on_path_register
         self.__on_publish = on_publish
@@ -22,7 +22,7 @@ class Module:
 
     @property
     def config_values(self):
-        return self.__config
+        return self._config
 
     def publish_message(self, path, message, retain=False):
         """
@@ -55,7 +55,7 @@ class Module:
                     raise ConfigError(message="Option needed", config_name=definition.name)
 
             try:
-                self.__config_checked[name] = getattr(self, '_check_{}'.format(type))(config[name])
+                self._config_checked[name] = getattr(self, '_check_{}'.format(type))(config[name])
             except AttributeError:
                 pass
             except ConfigCheckError as e:
