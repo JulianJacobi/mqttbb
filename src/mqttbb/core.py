@@ -100,6 +100,8 @@ class BroadcastBridge:
         try:
             module = __import__(name)
             module_class = module.Module
+            if module_class == BaseModule:
+                self.log.error('The module class seems to be a copy of base Module in "{}"'.format(name))
             if not issubclass(module.Module, BaseModule):
                 self.log.error('Given module "{}" is not valid: Class Module is not inherit from mqttbb.modules.Module'
                                .format(name))
