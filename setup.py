@@ -17,9 +17,11 @@ setup(
         'bottle',
         'jinja2'
     ],
-    package_data=[
-        'src/mqttbb/static/bootstrap/dist/css/bootstrap.min.css'
-        'src/mqttbb/static/bootstrap/dist/css/bootstrap.min.css.map'
-        'src/mqttbb/static/template/*'
-    ],
+    package_data={
+        'mqttbb': [
+            'static/bootstrap/dist/css/bootstrap.min.css',
+            'static/bootstrap/dist/css/bootstrap.min.css.map',
+            'static/templates/*',
+        ]
+    },
 )
